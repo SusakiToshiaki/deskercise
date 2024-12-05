@@ -9,7 +9,7 @@ openai.api_key = st.secrets["API_KEY"]
 def get_exercise_suggestion():
     try:
         # OpenAI APIで運動提案を生成
-        response = openai.ChatCompletion.create(
+        response = openai.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a fitness coach. Please respond in Japanese."},
