@@ -28,7 +28,7 @@ st.title("デスクサイズ | Deskercise")
 st.write("デスクで１分でできるクイックエクササイズ！次の運動までの間隔を設定してください！")
 
 # Intervalのユーザー設定
-interval = st.number_input("通知間隔を設定（分）:", min_value=1, max_value=120, value=60, step=1)
+interval = st.number_input("次のデスクサイズまでのインターバル（分）:", min_value=1, max_value=120, value=60, step=1)
 
 # セッション状態の初期化
 if "exercise" not in st.session_state:
@@ -37,6 +37,16 @@ if "time_remaining" not in st.session_state:
     st.session_state["time_remaining"] = 0
 if "is_started" not in st.session_state:
     st.session_state["is_started"] = False
+
+
+# スタートボタン
+if st.button("スタート"):
+    st.session_state["exercise"] = get_exercise_suggestion()
+    st.session_state["time_remaining"] = interval * 60
+    st.session_state["is_started"] = True
+    st.rerun()
+
+
 
 # 運動提案の表示（スタート後のみ表示）
 if st.session_state["exercise"]:
@@ -50,13 +60,6 @@ if st.session_state["exercise"]:
         st.session_state["exercise"] = get_exercise_suggestion()
         st.session_state["time_remaining"] = interval * 60
         st.rerun()
-
-# スタートボタン
-if st.button("スタート"):
-    st.session_state["exercise"] = get_exercise_suggestion()
-    st.session_state["time_remaining"] = interval * 60
-    st.session_state["is_started"] = True
-    st.rerun()
 
 # カウントダウンロジック
 if st.session_state["is_started"]:
