@@ -13,7 +13,7 @@ def get_exercise_suggestion():
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a fitness coach. Please respond in Japanese."},
-                {"role": "user", "content": "デスクワーカーに適した1分間でできる簡単なストレッチやエクササイズを一つ提案してください。ストレッチやエクササイズの内容だけ簡潔に答えてください。運動の手順がテキストだけで分かるように答えてください。max_token=200"}
+                {"role": "user", "content": "デスクワーカーに適した1分間でできる簡単なストレッチやエクササイズを一つ提案してください。ストレッチやエクササイズの内容だけ簡潔に答えてください。運動の手順がテキストだけで分かるように答えてください。（170字以内）"}
             ],
             max_tokens=200
         )
