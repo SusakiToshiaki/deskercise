@@ -28,7 +28,8 @@ def get_exercise_suggestion():
 
 # Streamlit UI
 st.title("デスクサイズ | Deskercise")
-st.write("デスクで１分でできるクイックエクササイズ！次の運動までの間隔を設定してください！")
+st.write("デスクで１分でできるクイックエクササイズ(その名も、デスクサイズ）！")
+st.write("次のデスクサイズまでのインターバルを設定してください！")
 
 # Intervalのユーザー設定
 interval = st.number_input("次のデスクサイズまでのインターバル（分）:", min_value=1, max_value=120, value=60, step=1)
