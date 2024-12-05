@@ -25,7 +25,7 @@ def get_exercise_suggestion():
 
 # Streamlit
 st.title("デスクサイズ | Deskercise")
-st.write("クイックエクササイズのリマインダーを受け取る間隔を設定してください！")
+st.write("デスクで１分でできるクイックエクササイズ！次の運動までの間隔を設定してください！")
 
 # Intervalのユーザー設定
 interval = st.number_input("通知間隔を設定（分）:", min_value=1, max_value=120, value=60, step=1)
