@@ -40,7 +40,9 @@ if "time_remaining" not in st.session_state:
 st.subheader("提案された運動：")
 st.write(st.session_state["exercise"])
 
+
 # カウントダウン表示用のプレースホルダー
+st.write("次の運動まで：")
 placeholder = st.empty()
 
 # カウントダウンロジック
