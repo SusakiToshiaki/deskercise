@@ -39,8 +39,8 @@ if "is_started" not in st.session_state:
     st.session_state["is_started"] = False
 
 
-# スタートボタン
-if st.button("スタート"):
+# インターバルの更新ボタン
+if st.button("インターバルの更新"):
     st.session_state["exercise"] = get_exercise_suggestion()
     st.session_state["time_remaining"] = interval * 60
     st.session_state["is_started"] = True
