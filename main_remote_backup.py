@@ -9,7 +9,7 @@ openai.api_key = st.secrets["API_KEY"]
 def get_exercise_suggestion():
     try:
         # OpenAI APIで運動提案を生成
-        response = openai.ChatCompletion.create(
+        response = openai.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a fitness coach. Please respond in Japanese."},
@@ -23,7 +23,7 @@ def get_exercise_suggestion():
     except Exception as e:
         return f"エラーが発生しました: {str(e)}"
 
-# Streamlit UI
+# Streamlit
 st.title("デスクサイズ | Deskercise")
 st.write("デスクで１分でできるクイックエクササイズ！次の運動までの間隔を設定してください！")
 
@@ -32,37 +32,29 @@ interval = st.number_input("通知間隔を設定（分）:", min_value=1, max_v
 
 # セッション状態の初期化
 if "exercise" not in st.session_state:
-    st.session_state["exercise"] = None
-if "time_remaining" not in st.session_state:
-    st.session_state["time_remaining"] = 0
-if "is_started" not in st.session_state:
-    st.session_state["is_started"] = False
-
-# 運動提案の表示（スタート後のみ表示）
-if st.session_state["exercise"]:
-    st.subheader("提案された運動：")
-    st.write(st.session_state["exercise"])
-
-# スタートボタン
-if st.button("スタート"):
     st.session_state["exercise"] = get_exercise_suggestion()
+if "time_remaining" not in st.session_state:
     st.session_state["time_remaining"] = interval * 60
-    st.session_state["is_started"] = True
-    st.experimental_rerun()
+
+# 運動提案の表示
+st.subheader("提案された運動：")
+st.write(st.session_state["exercise"])
+
+
+# カウントダウン表示用のプレースホルダー
+st.write("次の運動まで：")
+placeholder = st.empty()
 
 # カウントダウンロジック
-if st.session_state["is_started"]:
-    placeholder = st.empty()
+if st.session_state["time_remaining"] > 0:
     mins, secs = divmod(st.session_state["time_remaining"], 60)
     timer = f"{mins:02d}:{secs:02d}"
-    placeholder.markdown(f"### 次の運動まで: {timer}")
-
-    if st.session_state["time_remaining"] > 0:
-        time.sleep(1)
-        st.session_state["time_remaining"] -= 1
-        st.experimental_rerun()
-    else:
-        # 時間切れで次の運動提案を表示
-        st.session_state["exercise"] = get_exercise_suggestion()
-        st.session_state["time_remaining"] = interval * 60
-        st.experimental_rerun()
+    placeholder.markdown(f"### {timer}")
+    st.session_state["time_remaining"] -= 1
+    time.sleep(1)
+    st.rerun()
+else:
+    # カウントダウンが0になったら
+    st.session_state["exercise"] = get_exercise_suggestion()
+    st.session_state["time_remaining"] = interval * 60
+    st.rerun()
