@@ -40,8 +40,16 @@ if "is_started" not in st.session_state:
 
 # 運動提案の表示（スタート後のみ表示）
 if st.session_state["exercise"]:
-    st.subheader("提案された運動：")
+    st.subheader("提案されたデスクサイズ：")
     st.write(st.session_state["exercise"])
+
+    #運動やった！ボタンの追加
+    if st.button("このデスクサイズおわった！"):
+        st.balloons()
+        #Next Deskercise and reset count-down
+        st.session_state["exercise"] = get_exercise_suggestion()
+        st.session_state["time_remaining"] = interval * 60
+        st.rerun()
 
 # スタートボタン
 if st.button("スタート"):
