@@ -48,7 +48,7 @@ if st.button("スタート"):
     st.session_state["exercise"] = get_exercise_suggestion()
     st.session_state["time_remaining"] = interval * 60
     st.session_state["is_started"] = True
-    st.experimental_rerun()
+    st.rerun()
 
 # カウントダウンロジック
 if st.session_state["is_started"]:
@@ -60,9 +60,9 @@ if st.session_state["is_started"]:
     if st.session_state["time_remaining"] > 0:
         time.sleep(1)
         st.session_state["time_remaining"] -= 1
-        st.experimental_rerun()
+        st.rerun()
     else:
         # 時間切れで次の運動提案を表示
         st.session_state["exercise"] = get_exercise_suggestion()
         st.session_state["time_remaining"] = interval * 60
-        st.experimental_rerun()
+        st.rerun()
