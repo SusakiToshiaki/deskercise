@@ -1,9 +1,9 @@
 import streamlit as st
-import openai
+from openai import OpenAI
 import time
 
 # OpenAI APIキーの設定
-openai.api_key = st.secrets["API_KEY"]
+client = OpenAI(api_key=st.secrets["API_KEY"])
 
 # 運動提案を生成する関数
 def get_exercise_suggestion():
@@ -12,7 +12,7 @@ def get_exercise_suggestion():
         selected_body_parts = ", ".join(body_parts) if body_parts else "身体"
 
         # OpenAI APIで運動提案を生成
-        response = openai.chat.completions.create(
+        response = client.chat.completions.create(
             model="gpt-3.5-turbo",
             messages=[
                 {"role": "system", "content": "You are a fitness coach. Please respond in Japanese."},
